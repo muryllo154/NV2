@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ordenando Valores</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <script src="ordenando.js"></script>
+  
+    <label for="valor">Valor:</label>
+    <input type="number" id="valor">
+    <button onclick="add()">Adicionar</button>
+    <hr>
+  
+    <label for="ordenacao">Escolha o método de ordenação:</label>
+    <select id="ordenacao">
+      <option value="bubble">Bubble Sort</option>
+      <option value="selection">Selection Sort</option>
+      <option value="quick" selected>Quick Sort</option>
+    </select>
+  
+    <div class="button-row">
+      <button onclick="ordenar()" style="display: inline-block;">Ordenar</button>
+      <button onclick="misturar()" style="display: inline-block;">Misturar</button>
+    </div>
+    <hr> 
+  
+    <ul id="valores"></ul>
+
+  <script>
+    function add() {
+      const valorInput = document.getElementById('valor');
+      const listaValores = document.getElementById('valores');
+      const node = document.createElement('li');
+      const textoNode = document.createTextNode(valorInput.value);
+      node.appendChild(textoNode);
+      listaValores.appendChild(node);
+    }
+
+    function ordenar() {
+      const listaValores = document.getElementById('valores');
+      const listaOrdenacao = document.getElementById('ordenacao');
+      const valores = Array.from(listaValores.children).map(item => parseInt(item.textContent));
+      
+      let metodoOrdenacao;
+      switch (listaOrdenacao.selectedIndex) {
+        case 0:
+          metodoOrdenacao = 'bubble_sort';
+          break;
+        case 1:
+          metodoOrdenacao = 'selection_sort';
+          break;
+        case 2:
+          metodoOrdenacao = 'quick_sort';
+          break;
+        default:
+          metodoOrdenacao = 'quick_sort';
+      }
+      
+      window[metodoOrdenacao](valores);
+      
+      const novosValores = valores.map(item => `<li>${item}</li>`).join('');
+      listaValores.innerHTML = novosValores;
+    }
+
+    function misturar() {
+      const listaValores = document.getElementById('valores');
+      const valores = Array.from(listaValores.children).map(item => item.textContent);
+      
+      window.shuffle(valores);
+      
+      for (let i = listaValores.children.length - 1; i >= 0; i--) {
+        listaValores.appendChild(listaValores.children[Math.random() * i | 0]);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+body {
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
+}
+
+
+#pnlCatalogo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
